@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f8f2">
+    <meta name="description" content="MealBridge connects surplus food with the people who need it. Every Meal Finds Its Way.">
+    <title>MealBridge — Every Meal Finds Its Way</title>
+    <link rel="icon" href="/mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <main id="auth" class="auth-screen">
+      <section class="auth-visual">
+        <a class="brand brand-light" href="/" aria-label="MealBridge home">
+          <span class="brand-mark">m</span>
+          <span>mealbridge</span>
+        </a>
+        <div class="auth-story">
+          <span class="eyebrow">GOOD FOOD. GOOD JOURNEY.</span>
+          <h1>Every meal<br>finds its way.</h1>
+          <p>Bringing kitchens, communities and couriers together to make sure good food never goes to waste.</p>
+        </div>
+        <div class="auth-foot"><span class="leaf-dot"></span> A little less waste. A lot more hope.</div>
+      </section>
+      <section class="auth-panel">
+        <div class="auth-card">
+          <span class="eyebrow green">WELCOME TO MEALBRIDGE</span>
+          <h2 id="auth-title">Good to see you</h2>
+          <p class="muted" id="auth-copy">Sign in to your account to continue.</p>
+          <form id="login-form" class="form-stack">
+            <label>Email address<input name="email" type="email" autocomplete="username" value="admin@mealbridge.test" required></label>
+            <label>Password<div class="password-field"><input name="password" type="password" autocomplete="current-password" value="demo1234" required><button type="button" class="password-toggle" aria-label="Show password">Show</button></div></label>
+            <div class="form-between"><span class="small muted">Demo password: <b>demo1234</b></span><button type="button" class="link-button" id="forgot-password">Forgot password?</button></div>
+            <button class="button button-primary button-wide" type="submit">Sign in <span aria-hidden="true">→</span></button>
+          </form>
+          <button class="link-button auth-switch" id="show-register">New to MealBridge? <b>Create an account</b></button>
+          <div class="auth-note"><span class="info-icon">i</span><span>Demo accounts and sample data are for local testing only. No live GPS or external email service is connected.</span></div>
+        </div>
+        <form id="register-form" class="auth-card form-stack hidden">
+          <span class="eyebrow green">JOIN THE NETWORK</span>
+          <h2>Create your account</h2>
+          <p class="muted">New partner accounts need verification before they can take part in matching.</p>
+          <label>Your name<input name="name" autocomplete="name" required maxlength="80"></label>
+          <label>Organization<input name="organization" required maxlength="100"></label>
+          <label>Email address<input name="email" type="email" autocomplete="email" required></label>
+          <label>Partner role<select name="role" required><option value="donor">Restaurant / hostel donor</option><option value="recipient">Food bank / NGO</option><option value="driver">Delivery partner</option><option value="volunteer">Volunteer</option></select></label>
+          <label>Password<input name="password" type="password" autocomplete="new-password" minlength="10" required><span class="field-help">Use at least 10 characters.</span></label>
+          <div class="form-stack hidden" id="registration-driver-fields">
+            <label>Vehicle type<input name="vehicle" placeholder="e.g. Refrigerated van"></label>
+            <div class="form-row"><label>Capacity (kg)<input name="capacityKg" type="number" min="1" max="1000" value="25"></label><label>Current latitude<input name="lat" type="number" step="0.0001" value="28.6139"></label></div>
+            <label>Current longitude<input name="lng" type="number" step="0.0001" value="77.209"></label>
+            <p class="field-help">Your account must be verified before accepting delivery assignments.</p>
+          </div>
+          <button class="button button-primary button-wide" type="submit">Create account <span aria-hidden="true">→</span></button>
+          <button class="link-button auth-switch" id="show-login" type="button">Already a partner? <b>Sign in</b></button>
+        </form>
+      </section>
+    </main>
+
+    <div id="app" class="app-shell hidden">
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="#" data-nav="overview" aria-label="MealBridge dashboard">
+          <span class="brand-mark">m</span><span>mealbridge</span>
+        </a>
+        <div class="workspace-label">WORKSPACE</div>
+        <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+          <button class="nav-item active" data-nav="overview"><span class="nav-icon">◫</span>Overview</button>
+          <button class="nav-item" data-nav="donations"><span class="nav-icon">♧</span>Donations <span class="nav-count" id="donation-count">0</span></button>
+          <button class="nav-item" data-nav="deliveries"><span class="nav-icon">↗</span>Deliveries</button>
+          <button class="nav-item" data-nav="demand"><span class="nav-icon">⌖</span>Recipient demand</button>
+          <button class="nav-item" data-nav="partners"><span class="nav-icon">♧</span>Partners</button>
+          <button class="nav-item" data-nav="predictions"><span class="nav-icon">⌁</span>Surplus forecast <span class="nav-badge">BETA</span></button>
+          <button class="nav-item" data-nav="analytics"><span class="nav-icon">▥</span>Impact & analytics</button>
+          <button class="nav-item" data-nav="audit"><span class="nav-icon">☷</span>Activity log</button>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="sidebar-help"><div class="help-icon">?</div><div><b>Need a hand?</b><span>We’re here to help.</span></div><span class="help-arrow">↗</span></div>
+          <button class="profile-button" id="profile-button">
+            <span class="avatar avatar-green" id="sidebar-avatar">R</span>
+            <span class="profile-copy"><b id="sidebar-name">Riya Sharma</b><span id="sidebar-role">Administrator</span></span>
+            <span class="profile-menu">···</span>
+          </button>
+        </div>
+      </aside>
+      <section class="main-column">
+        <header class="topbar">
+          <button class="mobile-menu" id="mobile-menu" aria-label="Open navigation">☰</button>
+          <div class="breadcrumb"><span>Workspace</span><span class="crumb-divider">/</span><b id="page-title">Overview</b></div>
+          <div class="topbar-actions">
+            <span class="network-status"><i></i> Demo network</span>
+            <button class="icon-button notification-button" id="notification-button" aria-label="Notifications">♧<span class="notification-dot" id="notification-dot"></span></button>
+            <button class="top-user" id="top-user"><span class="avatar avatar-peach" id="top-avatar">R</span><span id="top-name">Riya Sharma</span><span class="chevron">⌄</span></button>
+          </div>
+        </header>
+        <main class="content" id="content" tabindex="-1"></main>
+      </section>
+    </div>
+    <div class="modal-layer hidden" id="modal-layer" role="presentation">
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button class="modal-close" id="modal-close" aria-label="Close dialog">×</button>
+        <div id="modal-content"></div>
+      </section>
+    </div>
+    <template id="donation-modal-template">
+      <span class="eyebrow green">DONATION DETAILS</span>
+      <h2 id="modal-title">Share surplus food</h2>
+      <p class="muted">Add clear food and expiry details so a suitable partner can be found in time.</p>
+      <form class="form-stack" id="donation-form">
+        <label>Food name<input name="title" placeholder="e.g. Fresh vegetable biryani" required maxlength="80"></label>
+        <div class="form-row">
+          <label>Food category<select name="category"><option>Prepared meals</option><option>Fresh produce</option><option>Bakery</option><option>Dairy</option><option>Packaged food</option></select></label>
+          <label>Quantity (kg)<input name="quantityKg" type="number" min="1" max="2000" step="0.5" placeholder="e.g. 24" required></label>
+        </div>
+        <label>Use by date & time<input name="expiresAt" type="datetime-local" required></label>
+        <fieldset class="dietary-field"><legend>Dietary information</legend><label><input type="checkbox" name="dietary" value="vegetarian"> Vegetarian</label><label><input type="checkbox" name="dietary" value="vegan"> Vegan</label><label><input type="checkbox" name="dietary" value="halal"> Halal</label></fieldset>
+        <label>Storage & handling notes<input name="storage" maxlength="160" placeholder="Donor-provided storage requirements"></label>
+        <div class="form-row location-inputs"><label>Pickup latitude<input name="lat" type="number" step="0.0001" value="28.6139" required></label><label>Pickup longitude<input name="lng" type="number" step="0.0001" value="77.209" required></label></div>
+        <p class="field-help">Demo coordinates only. Live maps and GPS are not connected.</p>
+        <button class="button button-primary button-wide" type="submit">Post donation <span aria-hidden="true">→</span></button>
+      </form>
+    </template>
+  </body>
+</html>

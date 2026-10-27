@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  DONOR
+  RECIPIENT
+  DRIVER
+  VOLUNTEER
+}
+
+enum DeliveryStatus {
+  ASSIGNED
+  PICKED_UP
+  IN_TRANSIT
+  DELIVERED
+  VERIFIED
+  ISSUE
+  CANCELLED
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         Role
+  verified     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  donations    Donation[] @relation("DonorDonations")
+  deliveries   Delivery[] @relation("DriverDeliveries")
+}
+
+model Donation {
+  id          String   @id @default(uuid())
+  donorId     String
+  title       String
+  category    String
+  quantityKg  Decimal  @db.Decimal(10, 2)
+  remainingKg Decimal  @db.Decimal(10, 2)
+  preparedAt  DateTime?
+  expiresAt   DateTime
+  storage     String?
+  createdAt   DateTime @default(now())
+  donor       User     @relation("DonorDonations", fields: [donorId], references: [id])
+  deliveries  Delivery[]
+
+  @@index([donorId, createdAt])
+  @@index([expiresAt])
+}
+
+model Delivery {
+  id          String         @id @default(uuid())
+  donationId  String
+  driverId    String?
+  status      DeliveryStatus @default(ASSIGNED)
+  quantityKg  Decimal        @db.Decimal(10, 2)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  donation    Donation       @relation(fields: [donationId], references: [id])
+  driver      User?          @relation("DriverDeliveries", fields: [driverId], references: [id])
+  history     DeliveryStatusHistory[]
+
+  @@index([driverId, status])
+  @@index([donationId, status])
+}
+
+model DeliveryStatusHistory {
+  id         String         @id @default(uuid())
+  deliveryId String
+  status     DeliveryStatus
+  actorId    String
+  note       String?
+  createdAt  DateTime       @default(now())
+  delivery   Delivery       @relation(fields: [deliveryId], references: [id], onDelete: Cascade)
+
+  @@index([deliveryId, createdAt])
+}

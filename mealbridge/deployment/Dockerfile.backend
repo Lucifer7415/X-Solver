@@ -1,0 +1,8 @@
+FROM node:24-alpine
+WORKDIR /app
+COPY backend/package.json backend/tsconfig.json ./
+RUN npm install
+COPY backend ./
+RUN npx prisma generate && npm run build
+EXPOSE 4000
+CMD ["npm", "start"]

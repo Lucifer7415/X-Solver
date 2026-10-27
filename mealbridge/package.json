@@ -1,0 +1,15 @@
+{
+  "name": "mealbridge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MealBridge food rescue coordination demo and full-stack scaffold",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "node --test test/api.test.js",
+    "demo": "node server/index.js",
+    "test:demo": "node --test test/api.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

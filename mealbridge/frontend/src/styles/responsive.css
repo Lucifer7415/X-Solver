@@ -1,0 +1,6 @@
+@media (max-width: 560px) {
+  .shell { padding: 20px 14px; }
+  .card { margin-top: 9vh; padding: 22px; }
+  .stats { grid-template-columns: 1fr; }
+  .header > span:last-child { display: none; }
+}
