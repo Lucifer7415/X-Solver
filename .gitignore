@@ -1,3 +1,11 @@
-mealbridge/data/store.json
-mealbridge/data/store.json.*.tmp
-mealbridge/node_modules/
+node_modules/
+dist/
+coverage/
+.env
+*.log
+data/store.json
+data/store.json.*.tmp
+backend/prisma/dev.db
+ai-service/.venv/
+ai-service/__pycache__/
+ai-service/saved_models/*.joblib
